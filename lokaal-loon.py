@@ -183,8 +183,9 @@ def print_hypotheek_salaris_schatting(huizen_prijs):
     schatting_maandsalaris = schatting_jaarlijks_toetsingsinkomen / 12.0 / 1.06
     print()
     print(f"Een schatting van het maandsalaris dat nodig is voor een werknemer op "
-          f"{gewenst_werknemerscapaciteit_percentage}% van de looncurve, is "
-          f"€ {schatting_maandsalaris :.2f}")
+          f"{gewenst_werknemerscapaciteit_percentage}% van de looncurve is "
+          f"€ {schatting_maandsalaris :.2f}. Het jaarlijkse toetsingsinkomen is dan "
+          f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}")
 
 # TODO: Eigenlijk is dit 1/3rde van het netto loon
 
@@ -195,7 +196,7 @@ def print_huur_salaris_schatting(huizen_prijs):
     print()
     print(f"Het inkomen om in aanmerking te komen voor een huurwoning, waarbij de verhuurder de woning in "
           f"240 maanden wil afbetalen, en loonstroken van 3,5 keer de maandelijkse huur verlangt: bruto "
-          f"€ {loon_bij_huren :.2f}, Het jaarlijkse toetsingsinkomen is dan "
+          f"€ {loon_bij_huren :.2f}. Het jaarlijkse toetsingsinkomen is dan "
           f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}")
 
 
