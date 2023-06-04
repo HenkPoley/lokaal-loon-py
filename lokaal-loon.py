@@ -136,18 +136,23 @@ def benader_percentage(locatie='heel-Nederland', gewenst_percentage=50.0):
         print(
             f"{i+1}: min: {min_prijs} prijs_gok: € {prijs_gok} max: {max_prijs} aantal_huizen: {aantal_huizen} percentage: {huidig_percentage :.1f}%")
 
-        if abs(huidig_percentage - gewenst_percentage) < 0.1:
+        if abs(huidig_percentage - gewenst_percentage) < ((1.0 / max_totaal_aantal_huizen) / 2.0):
             return prijs_gok
 
-        min_plus_max_prijs = (max_prijs + min_prijs)
+        prijs_gok_oud = prijs_gok
+        
         if huidig_percentage > gewenst_percentage:
             max_prijs = prijs_gok
-            prijs_gok = min_plus_max_prijs // 2
+            prijs_gok = (max_prijs + min_prijs) // 2
+            if(abs(prijs_gok_oud - prijs_gok) < 500):
+                return prijs_gok_oud
         else:
             min_prijs = prijs_gok
-            prijs_gok = min_plus_max_prijs // 2
+            prijs_gok = (max_prijs + min_prijs) // 2
+            if(abs(prijs_gok_oud - prijs_gok) < 500):
+                return prijs_gok_oud
 
-    return prijs_gok
+    return prijs_gok_oud
 
 
 def print_hypotheek_salaris_schatting(huizen_prijs):
