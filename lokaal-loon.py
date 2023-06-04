@@ -47,8 +47,65 @@ def check_funda(kamers_min=1, kamers_max=2, prijs_max=999999, locatie='heel-Nede
 
     # filter_AantalKamers-range-min: 1
     # filter_AantalKamers-range-max: 2
-    woonoppervlakte_min = 36  # 39
-    woonoppervlakte_max = 54  # 50
+    # https://rijksoverheid.bouwbesluit.com/Inhoud/docs/wet/bb2003_nvt/artikelsgewijs/hfd4/afd4-5
+    # Daarom zijn er minimum eisen gesteld aan het in het hoofdgedeelte van de woning aanwezige verblijfsgebied. Is het verblijfsgebied van een in een woongebouw gelegen woning kleiner dan 24 m², dan moet het gemeenschappelijk verblijfsgebied waarop die woning is aangewezen ten minste 18 m² zijn.
+    woonoppervlakte_min = 24  # 24
+    woonoppervlakte_max = 54  # 54 = 1,5 x 36
+
+    # my_dict = {
+    #     'filter_location': f'{locatie}',
+    #     'autocomplete-identifier': f'{locatie}',
+    #     'filter_Straal': f'{reisafstand_max}',
+    #     'filter_ZoekType': 'koop',  # 1ste filter_ZoekType
+    #     'filter_ZoekType': 'koop',  # 2de  filter_ZoekType
+    #     'filter_WijkNaam': 'active',
+    #     'filter_KoopprijsVan': '0',
+    #     'filter_KoopprijsVan': '',
+    #     'filter_KoopprijsTot': f'{prijs_max}',
+    #     'filter_KoopprijsTot': '',
+    #     'filter_SoortObject': '',
+    #     'filter_WoningSoort': 'active',
+    #     'filter_WoningType': 'active',
+    #     'filter_SoortAppartementId': 'active',
+    #     'filter_AppartementType': 'active',
+    #     'filter_SoortParkeergelegenheidId': 'active',
+    #     'filter_AutoCapaciteitParkeergelegenheid': '',
+    #     'filter_IndBouwrijp': '',
+    #     'filter_PublicatieDatum': '',
+    #     'filter_WoonOppervlakte': '',
+    #     'filter_WoonOppervlakte-range-min': f'{woonoppervlakte_min}',
+    #     'filter_WoonOppervlakte-range-max': f'{woonoppervlakte_max}',
+    #     'filter_PerceelOppervlakte': '',
+    #     'filter_PerceelOppervlakte-range-min': '',
+    #     'filter_PerceelOppervlakte-range-max': '',
+    #     'filter_AantalKamers': '',
+    #     'filter_AantalKamers-range-min': '',
+    #     'filter_AantalKamers-range-max': '',
+    #     'filter_AantalSlaapkamers': '',
+    #     'filter_LiggingTuin': 'active',
+    #     'filter_Tuinoppervlakte': '',
+    #     'filter_BouwPeriodeId': 'active',
+    #     'filter_Ligging': 'active',
+    #     'filter_BouwvormId': '',
+    #     'filter_SoortGarage': 'active',
+    #     'filter_AutoCapaciteitGarage': '',
+    #     'filter_AanwezigheidVan': 'active',
+    #     'filter_Toegankelijkheid': 'active',
+    #     'filter_Energielabel': 'active',
+    #     'filter_ZoekType': 'koop',  # 3rde filter_ZoekType
+    #     'filter_IndicatiePDF': 'active',
+    #     'filter_OpenHuizen': '',
+    #     'filter_VeilingDatum': '',
+    #     'filter_VirtueleOpenHuizen': '',
+    #     'sort': 'sorteer-datum_Descending',
+    #     'search-map-type-control-top': 'default',
+    #     'pagination-page-number-next': '2',
+    #     'filter_AantalKamers-range-min': f'{kamers_min}',
+    #     'filter_AantalKamers-range-max': f'{kamers_max}'
+    # }
+
+    # data = '&'.join(f'{key}={value}' for key, value in my_dict.items())
+
     data = f'filter_location={locatie}&autocomplete-identifier={locatie}&filter_Straal={reisafstand_max}&filter_ZoekType=koop&filter_ZoekType=koop&filter_WijkNaam=active&filter_KoopprijsVan=0&filter_KoopprijsVan=&filter_KoopprijsTot={prijs_max}&filter_KoopprijsTot=&filter_SoortObject=&filter_WoningSoort=active&filter_WoningType=active&filter_SoortAppartementId=active&filter_AppartementType=active&filter_SoortParkeergelegenheidId=active&filter_AutoCapaciteitParkeergelegenheid=&filter_IndBouwrijp=&filter_PublicatieDatum=&filter_WoonOppervlakte=&filter_WoonOppervlakte-range-min={woonoppervlakte_min}&filter_WoonOppervlakte-range-max={woonoppervlakte_max}&filter_PerceelOppervlakte=&filter_PerceelOppervlakte-range-min=&filter_PerceelOppervlakte-range-max=&filter_AantalKamers=&filter_AantalKamers-range-min=&filter_AantalKamers-range-max=&filter_AantalSlaapkamers=&filter_LiggingTuin=active&filter_Tuinoppervlakte=&filter_BouwPeriodeId=active&filter_Ligging=active&filter_BouwvormId=&filter_SoortGarage=active&filter_AutoCapaciteitGarage=&filter_AanwezigheidVan=active&filter_Toegankelijkheid=active&filter_Energielabel=active&filter_ZoekType=koop&filter_IndicatiePDF=active&filter_OpenHuizen=&filter_VeilingDatum=&filter_VirtueleOpenHuizen=&sort=sorteer-datum_Descending&search-map-type-control-top=default&pagination-page-number-next=2&filter_AantalKamers-range-min={kamers_min}&filter_AantalKamers-range-max={kamers_max}&'
 
     response = requests.post(f'https://www.funda.nl/koop/{locatie}/beschikbaar/sorteer-datum-af/',
@@ -93,28 +150,58 @@ def benader_percentage(locatie='heel-Nederland', gewenst_percentage=50.0):
     return prijs_gok
 
 
+def print_hypotheek_salaris_schatting(huizen_prijs):
+    print()
+    print(f"Om een minimaal salarisadvies op {gewenst_werknemerscapaciteit_percentage}% niveau "
+          f"niveau te bereiken rondom {bedrijfslocatie}, moet geprobeerd worden om € {huizen_prijs} "
+          f"te benaderen bij het veld 'maximale hypotheek' (C23) in de Excel sheet "
+          f"'Bijlage financieringslastnormen 2023', dat te vinden is op de website van het NIBUD: "
+          f"https://www.nibud.nl/onderzoeksrapporten/rapport-advies-financieringslastnormen-2023-2022/")
+
+    # Het eerste eenvoudige stuk in de NIBUD sheet.
+    if huizen_prijs <= 81247:
+        schatting_jaarlijks_toetsingsinkomen = huizen_prijs / 3.1248
+
+    # a = 0.094985, b = 18361.197
+    if (huizen_prijs > 81247) and (huizen_prijs <= 120884):
+        schatting_jaarlijks_toetsingsinkomen = 18361 + huizen_prijs * 0.094985
+
+    # Het tweede eenvoudige stuk in de NIBUD sheet.
+    if (huizen_prijs > 120884) and (huizen_prijs < 226143):
+        schatting_jaarlijks_toetsingsinkomen = huizen_prijs / 4.0295
+
+    # Er zitten rare sprongetjes in, en een kleine kromme in het begin, maar dit de benadering.
+    # a = 0.171712, b = 15846.485
+    # y = ax + b
+    if (huizen_prijs >= 226143) and (huizen_prijs <= 542734):
+        schatting_jaarlijks_toetsingsinkomen = 15846 + huizen_prijs * 0.171712
+
+    # Het derde eenvoudige stuk in de NIBUD sheet.
+    if (huizen_prijs >= 542734):
+        schatting_jaarlijks_toetsingsinkomen = huizen_prijs / 4.9340
+
+    schatting_maandsalaris = schatting_jaarlijks_toetsingsinkomen / 12.0 / 1.06
+    print()
+    print(f"Een schatting van het maandsalaris dat nodig is voor een werknemer op "
+          f"{gewenst_werknemerscapaciteit_percentage}% van de looncurve, is "
+          f"€ {schatting_maandsalaris :.2f}")
+
+# TODO: Eigenlijk is dit 1/3rde van het netto loon
+
+
+def print_huur_salaris_schatting(huizen_prijs):
+    loon_bij_huren = huizen_prijs / 240.0 * 3.5
+    schatting_jaarlijks_toetsingsinkomen = loon_bij_huren * 12.0 * 1.06
+    print()
+    print(f"Het inkomen om in aanmerking te komen voor een huurwoning, waarbij de verhuurder de woning in "
+          f"240 maanden wil afbetalen, en loonstroken van 3,5 keer de maandelijkse huur verlangt: bruto "
+          f"€ {loon_bij_huren :.2f}, Het jaarlijkse toetsingsinkomen is dan "
+          f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}")
+
+
 huizen_prijs = benader_percentage(
     bedrijfslocatie,
     gewenst_werknemerscapaciteit_percentage)
 
-print()
-print(f"Om een minimaal salarisadvies op {gewenst_werknemerscapaciteit_percentage}% niveau "
-      f"niveau te bereiken rondom {bedrijfslocatie}, moet geprobeerd worden om € {huizen_prijs} "
-      f"te benaderen bij het veld 'maximale hypotheek' (C23) in de Excel sheet "
-      f"'Bijlage financieringslastnormen 2023', dat te vinden is op de website van het NIBUD: "
-      f"https://www.nibud.nl/onderzoeksrapporten/rapport-advies-financieringslastnormen-2023-2022/")
-
-# TODO: Dit is een zeer groffe schatting.
-
-groffe_schatting_maandsalaris = huizen_prijs / 12.0 / 4.0
-print()
-print(f"Een ruwe schatting van het maandsalaris dat nodig is voor een werknemer op "
-      f"{gewenst_werknemerscapaciteit_percentage}% van de looncurve, is "
-      f"€ {groffe_schatting_maandsalaris :.2f}")
-
-loon_bij_huren = huizen_prijs / 240.0 * 3.5
-jaarloon_bij_huren = loon_bij_huren * 12.0 * 1.06
-print()
-print(f"Het inkomen om in aanmerking te komen voor een huurwoning, waarbij de verhuurder de woning in "
-      f"240 maanden wil afbetalen, en loonstroken van 3,5 keer de maandelijkse huur verlangt: bruto "
-      f"€ {loon_bij_huren :.2f}, Het jaarlijkse toetsingsinkomen is dan € {jaarloon_bij_huren :.0f}")
+print_hypotheek_salaris_schatting(huizen_prijs)
+print_huur_salaris_schatting(huizen_prijs)

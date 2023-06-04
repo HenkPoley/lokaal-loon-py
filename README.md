@@ -29,8 +29,6 @@ Benodigd inkomen om deze hypotheek te krijgen bij een rente van 4,5%, volgens de
 
 # TODO:
 
-* Verbeteren van de loonschatting op basis van de hypotheek door middel van de inverse van de financieringslastnormen.
-* De zoek-configuratie in een array zetten.
 * Opgehaalde gegevens in een databaseje opslaan.
 * Kaart maken van gevonden gegevens.
 * Grafieken plotten.
