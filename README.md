@@ -29,6 +29,7 @@ Benodigd inkomen om deze hypotheek te krijgen bij een rente van 4,5%, volgens de
 
 # TODO:
 
+* Belasting curve reverse-engineeren.
 * Opgehaalde gegevens in een databaseje opslaan.
 * Kaart maken van gevonden gegevens.
 * Grafieken plotten.

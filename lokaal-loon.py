@@ -186,11 +186,13 @@ def print_hypotheek_salaris_schatting(huizen_prijs):
         schatting_jaarlijks_toetsingsinkomen = huizen_prijs / 4.9340
 
     schatting_maandsalaris = schatting_jaarlijks_toetsingsinkomen / 12.0 / 1.06
+    schatting_uurloon = schatting_maandsalaris / 173
     print()
     print(f"Een schatting van het maandsalaris dat nodig is voor een werknemer op "
-          f"{gewenst_werknemerscapaciteit_percentage}% van de looncurve is "
-          f"€ {schatting_maandsalaris :.2f}. Het jaarlijkse toetsingsinkomen is dan "
-          f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}")
+          f"{gewenst_werknemerscapaciteit_percentage}% van de looncurve is bruto "
+          f"€ {schatting_maandsalaris :.2f} (uurloon op basis van 40 uur per week " 
+          f"€ {schatting_uurloon :.2f}). Het jaarlijkse toetsingsinkomen is dan "
+          f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}. Bij een hypotheekrente van 4.5%.")
 
 # TODO: Eigenlijk is dit 1/3rde van het netto loon, en dan omrekenen naar bruto.
 def print_huur_salaris_schatting(huizen_prijs):
