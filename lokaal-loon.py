@@ -192,17 +192,16 @@ def print_hypotheek_salaris_schatting(huizen_prijs):
           f"€ {schatting_maandsalaris :.2f}. Het jaarlijkse toetsingsinkomen is dan "
           f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}")
 
-# TODO: Eigenlijk is dit 1/3rde van het netto loon
-
-
+# TODO: Eigenlijk is dit 1/3rde van het netto loon, en dan omrekenen naar bruto.
 def print_huur_salaris_schatting(huizen_prijs):
-    loon_bij_huren = huizen_prijs / 240.0 * 3.5
-    schatting_jaarlijks_toetsingsinkomen = loon_bij_huren * 12.0 * 1.06
+    loon_bij_huren = huizen_prijs / 240.0 * 3
+    schatting_netto_jaarlijks_toetsingsinkomen = loon_bij_huren * 12.0 * 1.06
     print()
-    print(f"Het inkomen om in aanmerking te komen voor een huurwoning, waarbij de verhuurder de woning in "
-          f"240 maanden wil afbetalen, en loonstroken van 3,5 keer de maandelijkse huur verlangt: bruto "
-          f"€ {loon_bij_huren :.2f}. Het jaarlijkse toetsingsinkomen is dan "
-          f"€ {schatting_jaarlijks_toetsingsinkomen :.0f}")
+    print(f"NB: De berekening hier klopt niet, want huren in Nederland is duurder dan kopen met 100% hypotheek."
+          f"Het inkomen om in aanmerking te komen voor een huurwoning, waarbij de verhuurder de woning in "
+          f"240 maanden wil afbetalen, en loonstroken van 3 keer de maandelijkse huur verlangt: netto "
+          f"€ {loon_bij_huren :.2f} per maand. Het jaarlijkse 'netto toetsingsinkomen' is dan "
+          f"€ {schatting_netto_jaarlijks_toetsingsinkomen :.0f} + belasting (TODO)")
 
 
 huizen_prijs = benader_percentage(
@@ -210,4 +209,4 @@ huizen_prijs = benader_percentage(
     gewenst_werknemerscapaciteit_percentage)
 
 print_hypotheek_salaris_schatting(huizen_prijs)
-print_huur_salaris_schatting(huizen_prijs)
+#print_huur_salaris_schatting(huizen_prijs)
